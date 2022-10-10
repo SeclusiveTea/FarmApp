@@ -71,11 +71,18 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tb_profit = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.statistics = new System.Windows.Forms.TabPage();
+            this.age_search = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb_age = new System.Windows.Forms.TextBox();
+            this.tb_age_search = new System.Windows.Forms.Button();
+            this.tb_age_result = new System.Windows.Forms.TextBox();
             this.tab_home = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_age_ratio = new System.Windows.Forms.TextBox();
             this.FarmApp.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tab_Profit.SuspendLayout();
+            this.age_search.SuspendLayout();
             this.SuspendLayout();
             // 
             // FarmApp
@@ -83,7 +90,7 @@
             this.FarmApp.Controls.Add(this.tab_home);
             this.FarmApp.Controls.Add(this.tabPage2);
             this.FarmApp.Controls.Add(this.tab_Profit);
-            this.FarmApp.Controls.Add(this.statistics);
+            this.FarmApp.Controls.Add(this.age_search);
             this.FarmApp.Location = new System.Drawing.Point(-1, 0);
             this.FarmApp.Name = "FarmApp";
             this.FarmApp.SelectedIndex = 0;
@@ -131,6 +138,7 @@
             this.tb_result.Multiline = true;
             this.tb_result.Name = "tb_result";
             this.tb_result.ReadOnly = true;
+            this.tb_result.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tb_result.Size = new System.Drawing.Size(636, 342);
             this.tb_result.TabIndex = 2;
             // 
@@ -496,15 +504,57 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Total Profit per Day:";
             // 
-            // statistics
+            // age_search
             // 
-            this.statistics.Location = new System.Drawing.Point(4, 22);
-            this.statistics.Name = "statistics";
-            this.statistics.Padding = new System.Windows.Forms.Padding(3);
-            this.statistics.Size = new System.Drawing.Size(675, 402);
-            this.statistics.TabIndex = 3;
-            this.statistics.Text = "Statistics";
-            this.statistics.UseVisualStyleBackColor = true;
+            this.age_search.Controls.Add(this.tb_age_ratio);
+            this.age_search.Controls.Add(this.label2);
+            this.age_search.Controls.Add(this.tb_age_result);
+            this.age_search.Controls.Add(this.tb_age_search);
+            this.age_search.Controls.Add(this.tb_age);
+            this.age_search.Controls.Add(this.label1);
+            this.age_search.Location = new System.Drawing.Point(4, 22);
+            this.age_search.Name = "age_search";
+            this.age_search.Padding = new System.Windows.Forms.Padding(3);
+            this.age_search.Size = new System.Drawing.Size(675, 402);
+            this.age_search.TabIndex = 3;
+            this.age_search.Text = "Age Search";
+            this.age_search.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(240, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Enter an age to see all Livestock above that age:";
+            // 
+            // tb_age
+            // 
+            this.tb_age.Location = new System.Drawing.Point(257, 13);
+            this.tb_age.Name = "tb_age";
+            this.tb_age.Size = new System.Drawing.Size(100, 20);
+            this.tb_age.TabIndex = 1;
+            // 
+            // tb_age_search
+            // 
+            this.tb_age_search.Location = new System.Drawing.Point(381, 11);
+            this.tb_age_search.Name = "tb_age_search";
+            this.tb_age_search.Size = new System.Drawing.Size(75, 23);
+            this.tb_age_search.TabIndex = 2;
+            this.tb_age_search.Text = "Search";
+            this.tb_age_search.UseVisualStyleBackColor = true;
+            this.tb_age_search.Click += new System.EventHandler(this.tb_age_search_Click);
+            // 
+            // tb_age_result
+            // 
+            this.tb_age_result.Location = new System.Drawing.Point(13, 45);
+            this.tb_age_result.Multiline = true;
+            this.tb_age_result.Name = "tb_age_result";
+            this.tb_age_result.ReadOnly = true;
+            this.tb_age_result.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tb_age_result.Size = new System.Drawing.Size(653, 277);
+            this.tb_age_result.TabIndex = 3;
             // 
             // tab_home
             // 
@@ -516,6 +566,23 @@
             this.tab_home.TabIndex = 0;
             this.tab_home.Text = "Home";
             this.tab_home.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 338);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Ratio:";
+            // 
+            // tb_age_ratio
+            // 
+            this.tb_age_ratio.Location = new System.Drawing.Point(57, 335);
+            this.tb_age_ratio.Name = "tb_age_ratio";
+            this.tb_age_ratio.ReadOnly = true;
+            this.tb_age_ratio.Size = new System.Drawing.Size(100, 20);
+            this.tb_age_ratio.TabIndex = 5;
             // 
             // Form1
             // 
@@ -533,6 +600,8 @@
             this.tabPage2.PerformLayout();
             this.tab_Profit.ResumeLayout(false);
             this.tab_Profit.PerformLayout();
+            this.age_search.ResumeLayout(false);
+            this.age_search.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -552,7 +621,7 @@
         private System.Windows.Forms.TextBox tb_profit;
         private System.Windows.Forms.TextBox tb_govt_tax_month;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TabPage statistics;
+        private System.Windows.Forms.TabPage age_search;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         protected System.Windows.Forms.TextBox tb_gc_av_prof;
@@ -584,6 +653,12 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb_total_milk;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tb_age_result;
+        private System.Windows.Forms.Button tb_age_search;
+        private System.Windows.Forms.TextBox tb_age;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tb_age_ratio;
+        private System.Windows.Forms.Label label2;
     }
 }
 

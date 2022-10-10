@@ -69,15 +69,5 @@ namespace Assignment5.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WP_20121214_001 {
-            get {
-                object obj = ResourceManager.GetObject("WP_20121214_001", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

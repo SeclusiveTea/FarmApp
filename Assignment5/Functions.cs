@@ -190,5 +190,28 @@ namespace Assignment5
             return profits;
 
         }
+        public static String AgeSearch(int age)
+        {
+            String ageSearch = "";
+            double aboveAge = 0;
+            double total = 0;
+            foreach (var element in Data.farm)
+            {
+                if (element.Value.Age > age)
+                {
+                    aboveAge++;
+                    total++;
+                    ageSearch += $"ID:{element.Key}   Age: {element.Value.Age}     Type: {element.Value.GetAnimal()}\r\n";
+                }
+                else
+                {
+                    total++;
+                }
+            }
+            double ratio = aboveAge / total * 100;
+            ageSearch += $"!{ratio}%";
+
+            return ageSearch;   
+        }
     }
 }

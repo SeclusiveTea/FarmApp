@@ -33,18 +33,18 @@ namespace Assignment5
             tb_jersey_cow_tax.Text = $"${Data.JCowTax.ToString("0.00")}";
 
             tb_profit.Text = $"${Functions.TotalProfit().ToString("#.00")}";
-            tb_govt_tax_month.Text = Functions.GovtTaxMonth().ToString("#.00"); 
+            tb_govt_tax_month.Text = $"${Functions.GovtTaxMonth().ToString("#.00")}"; 
             Functions.GoatCowVsSheep(out double gcAvProf, out double sheepAvProf);
-            tb_gc_av_prof.Text = gcAvProf.ToString();
-            tb_sheep_av_prof.Text = sheepAvProf.ToString();
+            tb_gc_av_prof.Text = $"${gcAvProf.ToString("#.00")}";
+            tb_sheep_av_prof.Text = $"${sheepAvProf.ToString("#.00")}";
             tb_dog_cost.Text = $"{Functions.DogVsTotalCost().ToString("#.##")}%";
-            tb_jersey_total.Text = Functions.JerseyTaxTotal().ToString();
-            tb_jersey_prof.Text = Functions.JerseyProf().ToString();
+            tb_jersey_total.Text = $"${Functions.JerseyTaxTotal().ToString("#.00")}";
+            tb_jersey_prof.Text = $"${Functions.JerseyProf().ToString("#.00")}";
 
             
-            tb_total_milk.Text = Functions.TotalMilk().ToString();
-            tb_average_age.Text = Functions.AverageAge().ToString();
-            tb_red_animals.Text = Functions.RedRatio().ToString();
+            tb_total_milk.Text = $"{Functions.TotalMilk().ToString("#.00")} litres";
+            tb_average_age.Text = $"{Functions.AverageAge().ToString("#.00")}";
+            tb_red_animals.Text = $"{Functions.RedRatio().ToString("#.##")}%";
 
             Functions.GetProfitDict();
 
@@ -53,8 +53,6 @@ namespace Assignment5
             {
                 Console.WriteLine($"{element.Key}, {element.Value}");
             }
-
-
         }
         private void btn_display_all_Click(object sender, EventArgs e)
         {
@@ -74,7 +72,7 @@ namespace Assignment5
                 if (Data.farm.ContainsKey(id))
                 {
                     tb_result.Font = new Font("Microsoft Sans Serif", 8);
-                    tb_result.Text = Data.farm[id].DisplayAll();
+                    tb_result.Text = Data.farm[id].DisplayInfo();
                 }
                 else
                 {
@@ -145,6 +143,20 @@ namespace Assignment5
                         break;
                 }
             }
+        }
+        private void tb_age_search_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(tb_age.Text, out int age))
+            {
+                String ageFunction = Functions.AgeSearch(age);
+                String[] ageResults = ageFunction.Split('!');
+                tb_age_result.Text = ageResults[0];
+                tb_age_ratio.Text = ageResults[1];
+            }
+            else
+            {
+                MessageBox.Show("Invalid Input", "");
+            }      
         }
     }
 }

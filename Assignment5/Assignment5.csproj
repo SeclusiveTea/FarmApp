@@ -89,9 +89,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\WP_20121214_001.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\farmapp.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
