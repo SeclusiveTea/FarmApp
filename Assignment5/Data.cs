@@ -4,13 +4,17 @@ using System.Data.OleDb;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Assignment5
 {
+    //This class contains all code that relates to reading from the database and generating the variables
+    //and objects from the information in that database.
     internal class Data
     {
+        //create a static dictionary to access from anywhere in the program
         public static Dictionary<int, Animal> farm = new Dictionary<int, Animal>();
-
+        //create static variables for all commodity prices that can be accessed from anywhere in the program.
         public static double GoatMilkPrice;
         public static double SheepWoolPrice;
         public static double WaterPrice;
@@ -45,7 +49,7 @@ namespace Assignment5
 
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
-                        //read the data
+                        //read the data and add it to a string
 
                         while (reader.Read())
                         {
@@ -53,8 +57,12 @@ namespace Assignment5
                             {
                                 str += $"{reader[i]},";
                             }
+                            //skip the rest of the while loop if the table is commodity prices
                             if (query.Equals("commodity prices")) continue;
                             
+                            //for each line of the table, the table name will determine what object is created
+                            //and the contents will be split up and assigned to the properties
+                            //in the constructor to create a new object and add it to the static dictionary.
                             strArr = str.Split(',');
                             str = "";
                             
@@ -81,8 +89,11 @@ namespace Assignment5
                                     break;
                             }  
                         }
+                        //skip the next block of code if the table is not commodity prices
                         if (!query.Equals("commodity prices")) continue;
                         
+                        //for commodity prices table, this splits the string created and sets each item in the split array
+                        //to a commodity price variable
                         strArr = str.Split(',');
                         GoatMilkPrice = double.Parse(strArr[1]);
                         SheepWoolPrice = double.Parse(strArr[3]);
@@ -93,9 +104,10 @@ namespace Assignment5
                     }
                 }
             }
+            //error handling
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.ToString(), "Error");
             }
             //whether the code errors or not, the connection will always close because this code will execute before the program ends
             finally

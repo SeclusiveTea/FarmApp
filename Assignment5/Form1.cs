@@ -24,7 +24,7 @@ namespace Assignment5
             //retrieve the data from the access database.
             Data.GetData();
 
-            //Display commodity prices to user.
+            //Display commodity prices to user in the 'Reports' tab.
             tb_goat_milk_price.Text = $"${Data.GoatMilkPrice.ToString("0.00")}";
             tb_cow_milk_price.Text = $"${Data.CowMilkPrice.ToString("0.00")}";
             tb_sheep_wool_price.Text = $"${Data.SheepWoolPrice.ToString("0.00")}";
@@ -32,11 +32,14 @@ namespace Assignment5
             tb_govt_tax.Text = $"${Data.GovtTax.ToString("0.00")}";
             tb_jersey_cow_tax.Text = $"${Data.JCowTax.ToString("0.00")}";
 
+            //Display all the reports that are in the 'Reports' tab. 
             tb_profit.Text = $"${Functions.TotalProfit().ToString("#.00")}";
             tb_govt_tax_month.Text = $"${Functions.GovtTaxMonth().ToString("#.00")}"; 
+            
             Functions.GoatCowVsSheep(out double gcAvProf, out double sheepAvProf);
             tb_gc_av_prof.Text = $"${gcAvProf.ToString("#.00")}";
             tb_sheep_av_prof.Text = $"${sheepAvProf.ToString("#.00")}";
+            
             tb_dog_cost.Text = $"{Functions.DogVsTotalCost().ToString("#.##")}%";
             tb_jersey_total.Text = $"${Functions.JerseyTaxTotal().ToString("#.00")}";
             tb_jersey_prof.Text = $"${Functions.JerseyProf().ToString("#.00")}";
@@ -45,48 +48,32 @@ namespace Assignment5
             tb_total_milk.Text = $"{Functions.TotalMilk().ToString("#.00")} litres";
             tb_average_age.Text = $"{Functions.AverageAge().ToString("#.00")}";
             tb_red_animals.Text = $"{Functions.RedRatio().ToString("#.##")}%";
-
-            Functions.GetProfitDict();
-
-            Dictionary<int,double> profits = Functions.SortDict(Functions.GetProfitDict(), Functions.GetProfitDict().First().Key, Functions.GetProfitDict().Last().Key);
-            foreach (var element in profits)
-            {
-                Console.WriteLine($"{element.Key}, {element.Value}");
-            }
         }
-        private void btn_display_all_Click(object sender, EventArgs e)
-        {
-            tb_result.Text = "";
-            tb_result.Font = new Font("Microsoft Sans Serif", 8);
-            foreach (KeyValuePair<int,Animal> element in Data.farm)
-            {
-                
-                tb_result.Text += $"ID: {element.Key}, Amount Water: {element.Value.AmtWater}, Daily Cost: {element.Value.DailyCost}, Type:{element.Value.GetAnimal()}, Profit:{element.Value.ProfitPerDay()}\r\n";
-            }
-            tb_result.Text += $"Goat Milk {Data.GoatMilkPrice}\r\nSheep Wool{Data.SheepWoolPrice}\r\nWater {Data.WaterPrice}\r\nGovt Tax {Data.GovtTax}\r\nJersey Tax {Data.JCowTax}\r\nCow Milk {Data.CowMilkPrice}\r\n";
-        }
+        //REPORT 1: Search button for the 'Animal search' tab
         private void btn_search_Click(object sender, EventArgs e)
         {
+            //error handling, validation of user input
             if (int.TryParse(tb_query.Text, out int id))
             {
+                //query the dictionary of objects and display if there is a key that matches the user input.
                 if (Data.farm.ContainsKey(id))
                 {
-                    tb_result.Font = new Font("Microsoft Sans Serif", 8);
                     tb_result.Text = Data.farm[id].DisplayInfo();
                 }
                 else
                 {
+                    //error handling, what to display if key doesn't match user input.
                     MessageBox.Show("ID not Found", "");
                 }
             }
             else
             {
+                //EXTRA - Here is the code for the option to type "cows" and see all cows or "goats" and see all goats.
                 switch(tb_query.Text.ToLower())
                 {
                     case "cows":
-                        tb_result.Font = new Font("Courier New", 10);
                         tb_result.Text = $"{"ID",-8}{"Amount Water",-15}{"Daily Cost",-15}{"Weight",-15}{"Age",-10}{"Colour",-15}{"Amount Milk"}\r\n";
-                        foreach (KeyValuePair<int, Animal> element in Data.farm)
+                        foreach (var element in Data.farm)
                         {
                             if (element.Value.GetAnimal().Equals("Cow"))
                             {
@@ -95,20 +82,18 @@ namespace Assignment5
                         }
                         break;
                     case "jersey cows":
-                        tb_result.Font = new Font("Courier New", 10);
                         tb_result.Text = $"{"ID",-8}{"Amount Water",-15}{"Daily Cost",-15}{"Weight",-15}{"Age",-10}{"Colour",-15}{"Amount Milk"}\r\n";
-                        foreach (KeyValuePair<int, Animal> element in Data.farm)
+                        foreach (var element in Data.farm)
                         {
-                            if (element.Value.GetAnimal().Equals("Cow"))
+                            if (element.Value.GetAnimal().Equals("Jersey Cow"))
                             {
                                 tb_result.Text += element.Value.DisplayAll();
                             }
                         }
                         break;
                     case "goats":
-                        tb_result.Font = new Font("Courier New", 10);
                         tb_result.Text = $"{"ID",-8}{"Amount Water",-15}{"Daily Cost",-15}{"Weight",-15}{"Age",-10}{"Colour",-15}{"Amount Milk"}\r\n";
-                        foreach (KeyValuePair<int,Animal> element in Data.farm)
+                        foreach (var element in Data.farm)
                         {
                             if (element.Value.GetAnimal().Equals("Goat")) 
                             {
@@ -117,9 +102,8 @@ namespace Assignment5
                         }
                         break;
                     case "sheep":
-                        tb_result.Font = new Font("Courier New", 10);
                         tb_result.Text = $"{"ID",-8}{"Amount Water",-15}{"Daily Cost",-15}{"Weight",-15}{"Age",-10}{"Colour",-15}{"Amount Wool"}\r\n";
-                        foreach (KeyValuePair<int, Animal> element in Data.farm)
+                        foreach (var element in Data.farm)
                         {
                             if (element.Value.GetAnimal().Equals("Sheep"))
                             {
@@ -128,9 +112,8 @@ namespace Assignment5
                         }
                         break;  
                     case "dogs":
-                        tb_result.Font = new Font("Courier New", 10);
                         tb_result.Text = $"{"ID",-8}{"Amount Water",-15}{"Daily Cost",-15}{"Weight",-15}{"Age",-10}{"Colour"}\r\n";
-                        foreach (KeyValuePair<int, Animal> element in Data.farm)
+                        foreach (var element in Data.farm)
                         {
                             if (element.Value.GetAnimal().Equals("Dog"))
                             {
@@ -139,24 +122,37 @@ namespace Assignment5
                         }
                         break;
                     default :
+                        //error handling, what to display if a key doesn't match AND wording doesn't match any of the cases above.
                         MessageBox.Show("Invalid Input", "");
                         break;
                 }
             }
         }
-        private void tb_age_search_Click(object sender, EventArgs e)
+        //REPORT 11: Search button for 'Age Search' tab.
+        private void btn_age_search_Click(object sender, EventArgs e)
         {
+            //error handling - validate the user input.
             if (int.TryParse(tb_age.Text, out int age))
             {
+                //grab string of results from the age search function.
                 String ageFunction = Functions.AgeSearch(age);
+                //split the string so the string of animals is 1 element and the ratio is the other element.
                 String[] ageResults = ageFunction.Split('!');
+                //display string of animals
                 tb_age_result.Text = ageResults[0];
+                //display ratio of animals above that age.
                 tb_age_ratio.Text = ageResults[1];
             }
             else
             {
+                //what to display if user input isn't valid
                 MessageBox.Show("Invalid Input", "");
             }      
+        }
+        //REPORT 8: Button in "Reports" tab to generate the profitability report.
+        private void Btn_profit_list(object sender, EventArgs e)
+        {
+            Functions.PrintProfitList();
         }
     }
 }
